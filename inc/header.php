@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr-ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
-    <script src='./js/main.js' defer></script>
     <title>VortexVR</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src='js/script.js' defer></script>
 </head>
-<body>
-    <main>
 
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+
+        <h1 class="site-title">
+            <a href="index.php">Vortex <span>VR</span></a>
+        </h1>
+
+        <a href="index.php" class="logo-image">
+            <img src="images/logo.png" alt="Logo Vortex VR">
+        </a>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="catalogue.php">Catalogue</a></li>
+                <li><a href="panier.php">Panier</a></li>
+                <li><a href="creation_casque.php">Créer un casque</a></li>
+                <li><a href="register.php">Mon compte</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<main class="site-main">
