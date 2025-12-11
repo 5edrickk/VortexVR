@@ -1,3 +1,10 @@
+<?php if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} ?>
+
+<?php include_once("inc/autoloader.php"); ?>
+
+
 <!DOCTYPE html>
 <html lang="fr-ca">
 <head>
@@ -5,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VortexVR</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <script src='js/script.js' defer></script>
 </head>
 
@@ -18,7 +26,7 @@
         </h1>
 
         <a href="index.php" class="logo-image">
-            <img src="images/logo.png" alt="Logo Vortex VR">
+            <img src="images/favicon.png" alt="Logo Vortex VR">
         </a>
 
         <nav class="main-nav">
