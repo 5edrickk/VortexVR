@@ -1,6 +1,6 @@
 <?php require_once "inc/header.php"; 
 
-$_SESSION['id_utilisateur'] = 2;
+$_SESSION['id_utilisateur'] = 1;
 
 $idUtilisateur = $_SESSION['id_utilisateur'];
 
@@ -9,6 +9,7 @@ $panierManager = new PanierManager();
 $panier = $panierManager->getPanierActifPourUtilisateur($idUtilisateur);
 
 $articles = [];
+$nombreTypes = 0;   
 $nombreArticles = 0;
 $montantArticles = 0.0;
 $livraison = 9.99;        
@@ -45,15 +46,25 @@ if ($panier !== null) {
 function fmt($montant) {
     return number_format($montant, 2, ',', ' ');
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aller_wallet'])) {
+
+    if (empty($articles)) {
+        header("Location: checkout.php");
+        exit;
+    }
+
+    $_SESSION['checkout_id_panier'] =  $panier['id_panier'];
+    $_SESSION['checkout_quantite_totale'] = $nombreArticles;
+    $_SESSION['checkout_total_final'] = $totalFinal;
+
+    header("Location: wallet.php");
+    exit;
+}
 ?>
 
 <section class="checkout">
     <div class="checkout-container">
-
-        <section class="checkout-header-strip">
-            <h2 class="checkout-header-title">Passer la commande</h2>
-        </section>
-
         <section class="checkout-summary-row">
 
             <div class="checkout-breakdown-box">
@@ -88,6 +99,11 @@ function fmt($montant) {
                     <span class="breakdown-value"><?= fmt($totalFinal) ?> $</span>
                 </div>
 
+                <form method="post" class="checkout-action">
+                        <button type="submit" name="aller_wallet" class="checkout-confirm-button">
+                                Passer la commande
+                        </button>
+                </form>
             </div>
 
         </section>
@@ -115,11 +131,15 @@ function fmt($montant) {
                                 <img  src="<?= htmlspecialchars($image) ?>" alt="<?= htmlspecialchars($article['nom_casque']) ?>">
                             </div>
 
+                                <p class="product-quantity">
+                                    Quantité dans le panier : <?= (int) $article['quantite'] ?>
+                                </p>
+
                             <div class="product-bottom-row">
 
                                 <div class="product-qty-controls">
-                                    <button type="button" class="qty-btn">- 1</button>
-                                    <button type="button" class="qty-btn">+ 1</button>
+                                    <button type="button" class="qty-btn">- <?$article['quantite']?></button>
+                                    <button type="button" class="qty-btn">+ <?$article['quantite']?></button>
                                 </div>
 
                                 <span class="product-price"><?= fmt($article['prix_unitaire']) ?> $</span>
