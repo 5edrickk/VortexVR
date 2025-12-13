@@ -7,10 +7,6 @@ class PanierManager {
         $this->db = PDOFactory::getMySQLConnection();
     }
 
-    /**
-     * Retourne le panier de l'utilisateur (ou null si aucun).
-     * Résultat : tableau associatif ou null.
-     */
     public function getPanierActifPourUtilisateur(int $idUtilisateur): ?array {
         $sql = "SELECT id_panier, id_utilisateur
                 FROM paniers
@@ -28,10 +24,6 @@ class PanierManager {
         return $panier;
     }
 
-    /**
-     * Retourne la liste des articles d'un panier donné.
-     * Chaque article contient : nom_casque, image_fichier, quantite, prix_unitaire, sous_total.
-     */
     public function getArticlesDuPanier(int $idPanier): array {
 
         $sql = "SELECT 
@@ -52,9 +44,6 @@ class PanierManager {
         return $articles;
     }
 
-    /**
-     * Calcule le total à partir de la liste d'articles (avec 'sous_total').
-     */
     public function calculerTotal(array &$articles): float {
         $total = 0.0;
 
@@ -66,10 +55,6 @@ class PanierManager {
         return $total;
     }
 
-    /**
-     * Crée une nouvelle commande pour un utilisateur et un panier donnés.
-     * Retourne l'id de la commande créée.
-     */
     public function creerCommande(int $idUtilisateur, int $idPanier, float $montantTotal): int {
 
         $sql = 
@@ -86,12 +71,62 @@ class PanierManager {
         return $this->db->lastInsertId();
     }
 
-    /**
-     *  Vide les articles d'un panier après une commande.
-     */
     public function viderPanier(int $idPanier): void {
         $sql = "DELETE FROM articles_panier WHERE id_panier = :id_panier";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id_panier' => $idPanier]);
     }
+
+    public function creerPanierPourUtilisateur(int $idUtilisateur): int {
+
+        $sql = "INSERT INTO paniers (id_utilisateur)
+                VALUES (:id_utilisateur)";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ':id_utilisateur' => $idUtilisateur
+        ]);
+
+        return (int) $this->db->lastInsertId();
+    }
+
+    public function ajouterOuIncrementerArticle(int $idPanier, int $idCasque, float $prixUnitaire): void {
+    $sql = "SELECT id_article_panier, quantite
+            FROM articles_panier
+            WHERE id_panier = :id_panier
+              AND id_casque = :id_casque
+            LIMIT 1";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([
+        ':id_panier' => $idPanier,
+        ':id_casque' => $idCasque
+    ]);
+
+    $ligne = $stmt->fetch();
+
+    if ($ligne) {
+        $sqlUpdate = "UPDATE articles_panier
+                      SET quantite = quantite + 1
+                      WHERE id_article_panier = :id_article_panier";
+
+        $stmtUpdate = $this->db->prepare($sqlUpdate);
+        $stmtUpdate->execute([
+            ':id_article_panier' => (int) $ligne['id_article_panier']
+        ]);
+        return;
+    }
+
+    $sqlInsert = "INSERT INTO articles_panier (id_panier, id_casque, quantite, prix_unitaire)
+                  VALUES (:id_panier, :id_casque, 1, :prix_unitaire)";
+
+    $stmtInsert = $this->db->prepare($sqlInsert);
+    $stmtInsert->execute([
+        ':id_panier' => $idPanier,
+        ':id_casque' => $idCasque,
+        ':prix_unitaire' => $prixUnitaire
+    ]);
+}
+
+
 }
