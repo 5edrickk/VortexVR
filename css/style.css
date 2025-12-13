@@ -51,6 +51,10 @@ body {
     gap: 1.5rem;
 }
 
+img {
+    max-width: 100%;
+}
+
 .site-title {
     font-size: 1.9rem;
     font-weight: 700;
@@ -123,6 +127,11 @@ body {
     .logo-image img {
         height: 50px;
     }
+
+    .product-image-box img{
+        max-width: 30%;
+    }
+    
 }
 
 
