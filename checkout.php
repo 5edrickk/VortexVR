@@ -1,6 +1,6 @@
 <?php require_once "inc/header.php"; 
 
-$_SESSION['id_utilisateur'] = 1;
+$_SESSION['id_utilisateur'] = 2;
 
 $idUtilisateur = $_SESSION['id_utilisateur'];
 
@@ -138,8 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aller_wallet'])) {
                             <div class="product-bottom-row">
 
                                 <div class="product-qty-controls">
-                                    <button type="button" class="qty-btn">- <?$article['quantite']?></button>
-                                    <button type="button" class="qty-btn">+ <?$article['quantite']?></button>
+                                    <button type="button" class="qty-btn">- 1</button>
+                                    <button type="button" class="qty-btn">+ 1</button>
                                 </div>
 
                                 <span class="product-price"><?= fmt($article['prix_unitaire']) ?> $</span>
