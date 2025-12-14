@@ -1,7 +1,7 @@
 <?php require_once "inc/header.php"; 
 
 if (!isset($_SESSION['id_utilisateur'])) {
-    header("Location: connexion.php");
+    header("Location: compte.php");
     exit;
 }
 

@@ -7,137 +7,133 @@ if (document.URL.includes("checkout.php")) {
     let buttons = document.querySelectorAll(".qty-btn");
 
     for (let i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener("click", gererQuantity);
+        buttons[i].addEventListener("click", gererQuantity);
     }
 
-  function gererQuantity(e) {
-    let btn = e.target;
-    let card = btn.closest(".checkout-product-card");
+    function gererQuantity(e) {
+        let btn = e.target;  
+        let card = btn.closest(".checkout-product-card");  
+        let qteEl = card.querySelector(".product-quantity");  
+        let qte = lireQteDepuisTexte(qteEl.textContent); 
 
-    let qteEl = card.querySelector(".product-quantity");
-    let qte = lireQteDepuisTexte(qteEl.textContent);
+        if (btn.textContent === "+") {
+            qte++;
+        } 
+        if (btn.textContent === "-" && qte > 1) {
+            qte--;
+        }
 
-    if (btn.textContent.includes("+")){
-        qte++;
-    } 
-    if (btn.textContent.includes("-") && qte > 1){
-        qte--;
-    } 
+        ecrireQte(qteEl, qte);
+        recalculerRecap();
+        sauverQtesParProduit();
+    }
 
-    ecrireQte(qteEl, qte);
+    document.querySelector(".checkout-action").addEventListener("submit", validerPanier);
 
+    function validerPanier(e) {
+        recalculerRecap();
+        sauverQtesParProduit();
+
+        let valider = confirm("Voulez-vous confirmer la validation de votre panier ?");
+
+        if (!valider) {
+            e.preventDefault(); 
+        }
+    }
+
+    function round2(n) {
+        return Math.round(n * 100) / 100;
+    }
+
+    function lireMontant(txt) {
+        return parseFloat(txt.replace("$", "").replace(/\s/g, "").replace(",", ".")) || 0;
+    }
+
+    function ecrireMontant(n) {
+        return n.toLocaleString("fr-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function lireQteDepuisTexte(txt) {
+        let match = txt.match(/(\d+)\s*$/);
+        return match ? parseInt(match[1], 10) : 1;
+    }
+
+    function ecrireQte(el, qte) {
+        el.textContent = "Quantité dans le panier : " + qte;
+    }
+
+    let rows = document.querySelectorAll(".checkout-box .Pannel-div");
+    let nbEl = rows[0].querySelector(".Pannel-value");
+    let montantEl = rows[1].querySelector(".Pannel-value");
+    let livraisonEl = rows[2].querySelector(".Pannel-value");
+    let tpsEl = rows[3].querySelector(".Pannel-value");
+    let tvqEl = rows[4].querySelector(".Pannel-value");
+    let totalEl = rows[5].querySelector(".Pannel-value");
+
+    function recalculerRecap() {
+        let cards = document.querySelectorAll(".checkout-product-card");
+
+        let nbArticles = 0;
+        let montantArticles = 0;
+
+        for (let i = 0; i < cards.length; i++) {
+            let qteEl = cards[i].querySelector(".product-quantity");
+            let prixEl = cards[i].querySelector(".product-price");
+
+            let qte = lireQteDepuisTexte(qteEl.textContent);
+            let prix = lireMontant(prixEl.textContent);
+
+            nbArticles += qte;
+            montantArticles += qte * prix;
+        }
+
+        montantArticles = round2(montantArticles);
+
+        let livraison = lireMontant(livraisonEl.textContent);
+        let tps = round2(montantArticles * 0.05);
+        let tvq = round2(montantArticles * 0.09975);
+        let totalFinal = round2(montantArticles + livraison + tps + tvq);
+
+        nbEl.textContent = nbArticles;
+        montantEl.textContent = ecrireMontant(montantArticles) + " $";
+        tpsEl.textContent = ecrireMontant(tps) + " $";
+        tvqEl.textContent = ecrireMontant(tvq) + " $";
+        totalEl.textContent = ecrireMontant(totalFinal) + " $";
+
+        setCookie("checkout_qte", nbArticles, 1);
+        setCookie("checkout_total", totalFinal.toFixed(2), 1);
+    }
+
+    function sauverQtesParProduit() {
+        let cards = document.querySelectorAll(".checkout-product-card");
+        let map = {};
+
+        cards.forEach(card => {
+            let nom = card.querySelector(".product-name").textContent.trim();
+            let qteEl = card.querySelector(".product-quantity");
+            map[nom] = lireQteDepuisTexte(qteEl.textContent);
+        });
+
+        setCookie("checkout_qtes", JSON.stringify(map), 1);
+    }
+
+    function restaurerQtesParProduit() {
+        let raw = getCookie("checkout_qtes");
+        let map = JSON.parse(raw);
+        let cards = document.querySelectorAll(".checkout-product-card");
+
+        cards.forEach(card => {
+            let nom = card.querySelector(".product-name").textContent.trim();
+            if (map[nom] != null) {
+                let qteEl = card.querySelector(".product-quantity");
+                ecrireQte(qteEl, parseInt(map[nom], 10));
+            }
+        });
+    }
+
+    restaurerQtesParProduit();
     recalculerRecap();
     sauverQtesParProduit();
-  }
-
-  document.querySelector(".checkout-action").addEventListener("submit", validerPanier);
-  
-  function validerPanier(e){
-    recalculerRecap();
-    sauverQtesParProduit();
-
-    let valider = confirm("Voulez-vous confirmer la validation de votre panier ?");
-
-    if (!valider){
-         e.preventDefault();
-    }
-  };
-
-  function round2(n) {
-    return Math.round(n * 100) / 100;
-  }
-
-  function lireMontant(txt) {
-    return parseFloat(txt.replace("$", "").replace(/\s/g, "").replace(",", ".")) || 0;
-  }
-
-  function ecrireMontant(n) {
-    return n.toLocaleString("fr-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-
-  function lireQteDepuisTexte(txt) {
-    let match = txt.match(/(\d+)\s*$/);
-    return match ? parseInt(match[1], 10) : 1;
-  }
-
-  function ecrireQte(el, qte) {
-    el.textContent = "Quantité dans le panier : " + qte;
-  }
-
-  let rows = document.querySelectorAll(".checkout-breakdown-box .breakdown-row");
-
-  let nbEl = rows[0].querySelector(".breakdown-value");        
-  let montantEl = rows[1].querySelector(".breakdown-value");  
-  let livraisonEl = rows[2].querySelector(".breakdown-value"); 
-  let tpsEl = rows[3].querySelector(".breakdown-value");       
-  let tvqEl = rows[4].querySelector(".breakdown-value");       
-  let totalEl = rows[5].querySelector(".breakdown-value");     
-
-  function recalculerRecap() {
-    let cards = document.querySelectorAll(".checkout-product-card");
-
-    let nbArticles = 0;
-    let montantArticles = 0;
-
-    for (let i = 0; i < cards.length; i++) {
-      let qteEl = cards[i].querySelector(".product-quantity");
-      let prixEl = cards[i].querySelector(".product-price");
-
-      let qte = lireQteDepuisTexte(qteEl.textContent);
-      let prix = lireMontant(prixEl.textContent);
-
-      nbArticles += qte;
-      montantArticles += qte * prix;
-    }
-
-    montantArticles = round2(montantArticles);
-
-    let livraison = lireMontant(livraisonEl.textContent);
-    let tps = round2(montantArticles * 0.05);
-    let tvq = round2(montantArticles * 0.09975);
-    let totalFinal = round2(montantArticles + livraison + tps + tvq);
-
-    nbEl.textContent = nbArticles;
-    montantEl.textContent = ecrireMontant(montantArticles) + " $";
-    tpsEl.textContent = ecrireMontant(tps) + " $";
-    tvqEl.textContent = ecrireMontant(tvq) + " $";
-    totalEl.textContent = ecrireMontant(totalFinal) + " $";
-
-    setCookie("checkout_qte", nbArticles, 1);
-    setCookie("checkout_total", totalFinal.toFixed(2), 1);
-  }
-
-  function sauverQtesParProduit() {
-    let cards = document.querySelectorAll(".checkout-product-card");
-    let map = {};
-
-    for (let i = 0; i < cards.length; i++) {
-      let nom = cards[i].querySelector(".product-name").textContent.trim();
-      let qteEl = cards[i].querySelector(".product-quantity");
-      map[nom] = lireQteDepuisTexte(qteEl.textContent);
-    }
-
-    setCookie("checkout_qtes", JSON.stringify(map), 1);
-  }
-
-  function restaurerQtesParProduit() {
-    let raw = getCookie("checkout_qtes");
-    let map = JSON.parse(raw);
-    let cards = document.querySelectorAll(".checkout-product-card");
-
-    for (let i = 0; i < cards.length; i++) {
-      let nom = cards[i].querySelector(".product-name").textContent.trim();
-      if (map[nom] != null) {
-        let qteEl = cards[i].querySelector(".product-quantity");
-        ecrireQte(qteEl, parseInt(map[nom], 10));
-      }
-    }
-  }
-
-  restaurerQtesParProduit();
-  recalculerRecap();
-  sauverQtesParProduit();
-
 }
 
 /*Mise en place des Fonctionnalité Java Script 

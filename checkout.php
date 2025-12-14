@@ -1,6 +1,9 @@
 <?php require_once "inc/header.php"; 
 
-$_SESSION['id_utilisateur'] = 2;
+if (!isset($_SESSION['id_utilisateur'])) {
+    header("Location: compte.php");
+    exit;
+}
 
 $idUtilisateur = $_SESSION['id_utilisateur'];
 
@@ -65,94 +68,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aller_wallet'])) {
 
 <section class="checkout">
     <div class="checkout-container">
-        <section class="checkout-summary-row">
+        <section class="checkout-section">
 
-            <div class="checkout-breakdown-box">
+            <div class="checkout-box">
 
-                <div class="breakdown-row">
-                    <span class="breakdown-label">Nombre d'articles :</span>
-                    <span class="breakdown-value"><?= $nombreArticles ?></span>
+                <div class="Pannel-div">
+                    <span class="Pannel-infos">Nombre d'articles :</span>
+                    <span class="Pannel-value"><?= $nombreArticles ?></span>
                 </div>
 
-                <div class="breakdown-row">
-                    <span class="breakdown-label">Montant des articles :</span>
-                    <span class="breakdown-value"> <?= fmt($montantArticles) ?> $</span>
+                <div class="Pannel-div">
+                    <span class="Pannel-infos">Montant des articles :</span>
+                    <span class="Pannel-value"><?= fmt($montantArticles) ?> $</span>
                 </div>
 
-                <div class="breakdown-row">
-                    <span class="breakdown-label">Frais de livraison :</span>
-                    <span class="breakdown-value"><?= fmt($livraison) ?> $</span>
+                <div class="Pannel-div">
+                    <span class="Pannel-infos">Frais de livraison :</span>
+                    <span class="Pannel-value"><?= fmt($livraison) ?> $</span>
                 </div>
 
-                <div class="breakdown-row">
-                    <span class="breakdown-label">TPS (5 %) :</span>
-                    <span class="breakdown-value"><?= fmt($tps) ?> $</span>
+                <div class="Pannel-div">
+                    <span class="Pannel-infos">TPS (5 %) :</span>
+                    <span class="Pannel-value"><?= fmt($tps) ?> $</span>
                 </div>
 
-                <div class="breakdown-row">
-                    <span class="breakdown-label">TVQ (9,975 %) :</span>
-                    <span class="breakdown-value"> <?= fmt($tvq) ?> $</span>
+                <div class="Pannel-div">
+                    <span class="Pannel-infos">TVQ (9,975 %) :</span>
+                    <span class="Pannel-value"><?= fmt($tvq) ?> $</span>
                 </div>
 
-                <div class="breakdown-row breakdown-total">
-                    <span class="breakdown-label">Montant total :</span>
-                    <span class="breakdown-value"><?= fmt($totalFinal) ?> $</span>
+                <div class="Pannel-div total">
+                    <span class="Pannel-infos">Montant total :</span>
+                    <span class="Pannel-value"><?= fmt($totalFinal) ?> $</span>
                 </div>
 
                 <form method="post" class="checkout-action">
-                        <button type="submit" name="aller_wallet" class="checkout-confirm-button">
-                                Passer la commande
-                        </button>
+                    <button type="submit" name="aller_wallet" class="checkout-confirm-button">
+                        Passer la commande
+                    </button>
                 </form>
             </div>
 
         </section>
 
-        <section class="checkout-products-section">
+        <section class="section-produits">
 
             <?php if (empty($articles)): ?>
-                    <p class="checkout-empty-message">
-                        Votre panier est vide pour le moment.
-                    </p>
+                <p class="checkout-empty-message">
+                    Votre panier est vide pour le moment.
+                </p>
+            <?php else: ?>
 
-                <?php else: ?>
+            <div class="checkout-products-grid">
 
-                <div class="checkout-products-grid">
+                <?php foreach ($articles as $article): ?>
+                    <?php
+                        $image = 'images/' . $article['image_fichier'];
+                    ?>
 
-                    <?php foreach ($articles as $article): ?>
-                            <?php
-                                $image = 'images/' . $article['image_fichier'];
-                            ?>
+                    <article class="checkout-product-card">
+                        <h3 class="product-name"><?= htmlspecialchars($article['nom_casque']) ?></h3>
 
-                        <article class="checkout-product-card">
-                            <h3 class="product-name"><?= htmlspecialchars($article['nom_casque']) ?></h3>
+                        <div class="product-image-box">
+                            <img src="<?= htmlspecialchars($image) ?>" alt="<?= htmlspecialchars($article['nom_casque']) ?>">
+                        </div>
 
-                            <div class="product-image-box">
-                                <img  src="<?= htmlspecialchars($image) ?>" alt="<?= htmlspecialchars($article['nom_casque']) ?>">
+                        <p class="product-quantity">
+                            Quantité dans le panier : <?= (int) $article['quantite'] ?>
+                        </p>
+
+                        <div class="product-bottom-row">
+                            <div class="product-qty-controls">
+                                <button type="button" class="qty-btn">-</button>
+                                <button type="button" class="qty-btn">+</button>
                             </div>
+                            <span class="product-price"><?= fmt($article['prix_unitaire']) ?> $</span>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
 
-                                <p class="product-quantity">
-                                    Quantité dans le panier : <?= (int) $article['quantite'] ?>
-                                </p>
-
-                            <div class="product-bottom-row">
-
-                                <div class="product-qty-controls">
-                                    <button type="button" class="qty-btn">- 1</button>
-                                    <button type="button" class="qty-btn">+ 1</button>
-                                </div>
-
-                                <span class="product-price"><?= fmt($article['prix_unitaire']) ?> $</span>
-                            </div>
-                        </article>
-                    <?php endforeach; ?>
-
-                </div>
-            <?php endif; ?>
+            </div>
+        <?php endif; ?>
 
         </section>
 
     </div>
 
 </section>
+
 <?php require_once "inc/footer.php"; ?>
