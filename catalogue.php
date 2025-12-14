@@ -1,16 +1,8 @@
 <?php require_once "inc/header.php"; 
 
-// (Optionnel) Si tu veux obliger la connexion pour ajouter au panier
-if (!isset($_SESSION['id_utilisateur'])) {
-    $_SESSION['id_utilisateur'] = 1; // à enlever en production
-}
-
 $casqueManager = new CasqueManager();
 $panierManager = new PanierManager();
 
-// -------------------------
-// 1) Récupération des filtres (GET)
-// -------------------------
 $q = trim($_GET['q'] ?? '');
 $idMarque = $_GET['id_marque'] ?? '';
 $prixMin = $_GET['prix_min'] ?? '';
@@ -25,22 +17,16 @@ $filtres = [
     'sort' => $sort
 ];
 
-// -------------------------
-// 2) Données pour affichage
-// -------------------------
 $marques = $casqueManager->getMarques();
 $casques = $casqueManager->getCasquesFiltres($filtres);
 
-// -------------------------
-// 3) Ajouter au panier (POST)
-// -------------------------
 $message = null;
 $erreur = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
 
     if (!isset($_SESSION['id_utilisateur'])) {
-        header("Location: connexion.php");
+        header("Location: compte.php");
         exit;
     }
 
@@ -54,18 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
     } elseif ((int)$casque['stock'] <= 0) {
         $erreur = "Stock insuffisant.";
     } else {
-        // On récupère ou crée le panier
         $panier = $panierManager->getPanierActifPourUtilisateur($idUtilisateur);
 
         if ($panier === null) {
-            // Si tu n'as pas cette méthode, dis-moi, je te la donne.
             $idPanier = $panierManager->creerPanierPourUtilisateur($idUtilisateur);
         } else {
             $idPanier = (int) $panier['id_panier'];
         }
-
-        // Ajouter (ou augmenter quantité si déjà présent)
-        // Si tu n'as pas cette méthode, dis-moi, je te la code.
         $panierManager->ajouterOuIncrementerArticle(
             $idPanier,
             $idCasque,
@@ -76,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
     }
 }
 
-// Helper affichage prix
 function fmt($m) {
     return number_format((float)$m, 2, ',', ' ');
 }
@@ -97,7 +77,6 @@ function fmt($m) {
             <p class="catalogue-error"><?= htmlspecialchars($erreur) ?></p>
         <?php endif; ?>
 
-        <!-- Filtres -->
         <form method="get" class="catalogue-filters">
 
             <div class="filter-group">
@@ -144,7 +123,6 @@ function fmt($m) {
 
         </form>
 
-        <!-- Grille -->
         <?php if (empty($casques)): ?>
             <p class="catalogue-empty">Aucun casque ne correspond à votre recherche.</p>
         <?php else: ?>
