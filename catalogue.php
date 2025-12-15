@@ -119,12 +119,12 @@ function fmt($m) {
 
             <div class="filter-group">
                 <label for="prix_min">Prix min</label>
-                <input type="number" step="0.01" id="prix_min" name="prix_min" value="<?= htmlspecialchars((string)$prixMin) ?>">
+                <input type="number"  min=0 step="0.01" id="prix_min" name="prix_min" value="<?= htmlspecialchars((string)$prixMin) ?>">
             </div>
 
             <div class="filter-group">
                 <label for="prix_max">Prix max</label>
-                <input type="number" step="0.01" id="prix_max" name="prix_max" value="<?= htmlspecialchars((string)$prixMax) ?>">
+                <input type="number" min=0 step="0.01" id="prix_max" name="prix_max" value="<?= htmlspecialchars((string)$prixMax) ?>">
             </div>
 
             <div class="filter-group">
