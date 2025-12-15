@@ -1,6 +1,6 @@
 <?php
-include_once __DIR__ . "/../class/clientManager.php";
-include_once __DIR__ . "/../class/client.php";
+include_once __DIR__ . "/../classe/clientManager.php";
+include_once __DIR__ . "/../classe/client.php";
 
 $clientManager = new ClientManager();
 
