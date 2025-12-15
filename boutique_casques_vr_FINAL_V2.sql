@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mer. 10 déc. 2025 à 18:46
+-- Généré le : lun. 15 déc. 2025 à 12:52
 -- Version du serveur : 8.0.43
 -- Version de PHP : 8.2.27
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `boutique_casques_vr`
 --
+CREATE DATABASE IF NOT EXISTS `boutique_casques_vr` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `boutique_casques_vr`;
 
 -- --------------------------------------------------------
 
@@ -40,10 +42,9 @@ CREATE TABLE `articles_panier` (
 --
 
 INSERT INTO `articles_panier` (`id_article_panier`, `id_panier`, `id_casque`, `quantite`, `prix_unitaire`) VALUES
-(1, 1, 5, 1, 3499.00),
-(2, 1, 3, 1, 399.99),
-(3, 2, 1, 1, 1799.99),
-(4, 2, 2, 2, 1199.99);
+(9, 2, 1, 1, 1799.99),
+(10, 2, 5, 1, 3499.00),
+(26, 1, 1, 1, 1799.99);
 
 -- --------------------------------------------------------
 
@@ -93,7 +94,13 @@ CREATE TABLE `commandes` (
 
 INSERT INTO `commandes` (`id_commande`, `id_utilisateur`, `id_panier`, `montant_total`, `date_commande`) VALUES
 (1, 1, 1, 3898.99, '2025-12-10 18:20:34'),
-(2, 2, 2, 4199.97, '2025-12-10 18:20:34');
+(2, 2, 2, 4199.97, '2025-12-10 18:20:34'),
+(3, 1, 1, 4952.74, '2025-12-12 18:08:11'),
+(4, 2, 2, 4838.91, '2025-12-12 18:14:05'),
+(5, 1, 1, 4952.74, '2025-12-12 18:37:00'),
+(6, 3, 3, 1849.57, '2025-12-12 18:43:47'),
+(7, 1, 1, 4952.74, '2025-12-12 18:52:59'),
+(8, 4, 4, 3229.26, '2025-12-13 09:11:17');
 
 -- --------------------------------------------------------
 
@@ -147,19 +154,27 @@ INSERT INTO `paniers` (`id_panier`, `id_utilisateur`) VALUES
 CREATE TABLE `utilisateurs` (
   `id_utilisateur` int NOT NULL,
   `nom_utilisateur` varchar(50) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
   `courriel` varchar(100) NOT NULL,
-  `mot_de_passe` varchar(255) NOT NULL
+  `mot_de_passe` varchar(255) NOT NULL,
+  `pays` varchar(50) DEFAULT NULL,
+  `adresse` varchar(100) DEFAULT NULL,
+  `argent` decimal(10,2) DEFAULT '0.00',
+  `ville` varchar(50) DEFAULT NULL,
+  `telephone` varchar(30) DEFAULT NULL,
+  `solde` decimal(10,2) NOT NULL DEFAULT '10000.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`id_utilisateur`, `nom_utilisateur`, `courriel`, `mot_de_passe`) VALUES
-(1, 'Abdoulaye', 'abdoulaye@example.com', 'abc@123'),
-(2, 'William', 'william@example.com', 'abc@123'),
-(3, 'Sedrick', 'sedrick@example.com', 'abc@123'),
-(4, 'Alexandre', 'alexandre@example.com', 'abc@123');
+INSERT INTO `utilisateurs` (`id_utilisateur`, `nom_utilisateur`, `nom`, `prenom`, `courriel`, `mot_de_passe`, `pays`, `adresse`, `argent`, `ville`, `telephone`, `solde`) VALUES
+(1, 'Abdoulaye', '', '', 'abdoulaye@example.com', 'abc@123', NULL, NULL, 0.00, NULL, NULL, 5047.26),
+(2, 'William', '', '', 'william@example.com', 'abc@123', NULL, NULL, 0.00, NULL, NULL, 5161.09),
+(3, 'Sedrick', '', '', 'sedrick@example.com', 'abc@123', NULL, NULL, 0.00, NULL, NULL, 8150.43),
+(4, 'Alexandre', '', '', 'alexandre@example.com', 'abc@123', NULL, NULL, 0.00, NULL, NULL, 6770.74);
 
 --
 -- Index pour les tables déchargées
@@ -217,7 +232,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `articles_panier`
 --
 ALTER TABLE `articles_panier`
-  MODIFY `id_article_panier` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_article_panier` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT pour la table `casques`
@@ -229,7 +244,7 @@ ALTER TABLE `casques`
 -- AUTO_INCREMENT pour la table `commandes`
 --
 ALTER TABLE `commandes`
-  MODIFY `id_commande` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_commande` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `marques`
@@ -241,13 +256,13 @@ ALTER TABLE `marques`
 -- AUTO_INCREMENT pour la table `paniers`
 --
 ALTER TABLE `paniers`
-  MODIFY `id_panier` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_panier` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id_utilisateur` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_utilisateur` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Contraintes pour les tables déchargées
