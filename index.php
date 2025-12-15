@@ -1,6 +1,9 @@
 <?php require_once "inc/header.php";
 
-$_SESSION['id_utilisateur'] = 2;
+include_once "classe/CasqueManager.php";
+include_once "classe/PanierManager.php";
+
+$_SESSION['id_utilisateur'];
 
 $casqueManager = new CasqueManager();
 $panierManager = new PanierManager();
@@ -22,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
     $idCasque = (int) ($_POST['id_casque'] ?? 0);
 
     $casque = $casqueManager->getCasqueParId($idCasque);
-
 
     if (!$casque) {
         $erreur = "Casque introuvable.";

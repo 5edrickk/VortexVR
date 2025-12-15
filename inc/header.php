@@ -1,9 +1,10 @@
-<?php if (session_status() === PHP_SESSION_NONE) {
+<?php
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
-} ?>
+}
+?>
 
 <?php include_once("inc/autoloader.php"); ?>
-
 
 <!DOCTYPE html>
 <html lang="fr-ca">
@@ -12,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VortexVR</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/png" href="images/favicon.png">
     <script src='js/script.js' defer></script>
 </head>
 
@@ -32,9 +32,15 @@
         <nav class="main-nav">
             <ul>
                 <li><a href="catalogue.php">Catalogue</a></li>
+                <?php if (!empty($_SESSION['nom_utilisateur'])): ?>
                 <li><a href="panier.php">Panier</a></li>
                 <li><a href="creation_casque.php">Créer un casque</a></li>
-                <li><a href="register.php">Mon compte</a></li>
+            <a href="/projet-int-grateur-vortexvr/compte.php">Compte</a>
+            <a href="/projet-int-grateur-vortexvr/traitement.php?action=logout">Se déconnecter</a>
+      <?php else: ?>
+        <a href="/projet-int-grateur-vortexvr/register.php">Inscription</a>
+        <a href="/projet-int-grateur-vortexvr/login.php">Se connecter</a>
+      <?php endif; ?>
             </ul>
         </nav>
 

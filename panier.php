@@ -1,6 +1,11 @@
 <?php require_once "inc/header.php";
 
-$idUtilisateur = $_SESSION['id_utilisateur'] = 2;
+if (!isset($_SESSION['id_utilisateur'])) {
+    header("Location: connexion.php");
+    exit;
+}
+
+$idUtilisateur = $_SESSION['id_utilisateur'];
 
 $panierManager = new PanierManager();
 

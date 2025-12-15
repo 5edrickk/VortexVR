@@ -16,17 +16,8 @@ class CasqueManager {
         return $this->db->query($sql)->fetchAll();
     }
 
-    public function getTousLesCasques(): array {
-        $sql = "SELECT c.id_casque, c.id_marque, c.id_createur,
-                       c.nom_casque, c.prix, c.stock, c.description, c.image_fichier,
-                       m.nom_marque
-                FROM casques c
-                JOIN marques m ON m.id_marque = c.id_marque
-                ORDER BY c.nom_casque ASC";
-        return $this->db->query($sql)->fetchAll();
-    }
 
-    //ajout de will pour ramaser seulement les 3 premiers casques
+        //ajout de will pour ramaser seulement les 3 premiers casques
 
     public function getTroisCasques(): array {
         $sql = "SELECT c.id_casque, c.id_marque, c.id_createur,
@@ -40,6 +31,18 @@ class CasqueManager {
     }
 
     //fin de l'ajout
+
+
+
+    public function getTousLesCasques(): array {
+        $sql = "SELECT c.id_casque, c.id_marque, c.id_createur,
+                       c.nom_casque, c.prix, c.stock, c.description, c.image_fichier,
+                       m.nom_marque
+                FROM casques c
+                JOIN marques m ON m.id_marque = c.id_marque
+                ORDER BY c.nom_casque ASC";
+        return $this->db->query($sql)->fetchAll();
+    }
 
     public function getCasquesFiltres(array $filtres): array {
 

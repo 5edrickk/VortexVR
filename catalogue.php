@@ -1,4 +1,5 @@
 <?php require_once "inc/header.php"; 
+include_once "classe/CasqueManager.php";
 
 $casqueManager = new CasqueManager();
 $panierManager = new PanierManager();
