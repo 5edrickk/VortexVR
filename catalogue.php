@@ -140,8 +140,8 @@ function fmt($m) {
 
                         <div class="catalogue-imgbox">
                             <img class="catalogue-img"
-                                 src="<?= htmlspecialchars($img) ?>"
-                                 alt="<?= htmlspecialchars($c['nom_casque']) ?>">
+                                src="<?= htmlspecialchars($img) ?>"
+                                alt="<?= htmlspecialchars($c['nom_casque']) ?>">
                         </div>
 
                         <p class="catalogue-desc"><?= htmlspecialchars($c['description']) ?></p>
