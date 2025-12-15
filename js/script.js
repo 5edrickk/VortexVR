@@ -1,3 +1,81 @@
+/*Mise en place des fonctionnalite java script pour la page index ou acceuil*/ 
+
+if(document.URL.includes("index.php")){
+
+  document.getElementById('avant').addEventListener('click', avant);
+  document.getElementById('apres').addEventListener('click', apres);
+
+  let num = 0;
+
+  let casques = document.querySelectorAll('.acc-produit');
+  let totalCasque = casques.length;
+
+  for(let i = 0; i < totalCasque; i++){
+    if(i !== 0){
+      casques[i].style.display = 'none';
+    }
+  }
+
+
+  function apres(){
+    casques[num].style.display = 'none';
+    num = (num + 1) % totalCasque;
+    casques[num].style.display = 'block';
+  }
+
+  function avant(){
+    casques[num].style.display = 'none';
+    num = (num - 1 + totalCasque) % totalCasque;
+    casques[num].style.display = 'block';
+  }
+}
+
+
+
+/*Mise en place des fonctionnalité Java Script pour la page panier*/
+
+if(document.URL.includes("panier.php")){
+document.getElementById('commandePanier').addEventListener('click', sendCheckout)
+document.querySelectorAll(".supprimerArticle").forEach(bouton => {bouton.addEventListener("click", validerSupprimer)});
+
+function sendCheckout(){
+  let checkboxes = document.querySelectorAll('.produit-checkbox:checked');
+
+  if(checkboxes.length === 0) {
+    alert('Il vous faut au minimum un produit de Sélectionner!');
+    return;
+  }
+
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'checkout.php';
+
+  checkboxes.forEach(checkbox => {
+    var input = document.createElement('input');
+    input.type ='hidden';
+    input.name = 'articleSelectionner[]';
+    input.value = checkbox.value;
+    form.appendChild(input);
+  })
+  document.body.appendChild(form);
+  let validation = confirm("Voulez-vous vraiment poursuivre avec les produits selectionner");
+  if(validation){
+      form.submit();
+  }
+}
+
+function validerSupprimer(event){
+
+  let validation = confirm("Voulez-vous vraiment enlever cet article de votre panier?");
+  if(!validation){
+    event.preventDefault();
+  }
+}
+}
+
+
+
+
 
 /*Mise en place des Fonctionnalité Java Script 
 Pour la page Checkout*/

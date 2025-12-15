@@ -25,13 +25,15 @@ class PanierManager {
     }
 
     public function getArticlesDuPanier(int $idPanier): array {
-
+            //id_article_panier et c.description ajouter par will
         $sql = "SELECT 
+                ap.id_article_panier,
                 ap.id_panier,
                 ap.id_casque,
                 ap.quantite,
                 ap.prix_unitaire,
                 c.nom_casque,
+                c.description,
                 c.image_fichier
             FROM articles_panier ap
             JOIN casques c ON c.id_casque = ap.id_casque
@@ -128,5 +130,53 @@ class PanierManager {
     ]);
 }
 
+
+//ajouter par will
+
+
+public function supprimerArticleUtilisateur(int $idUtilisateur, int $idArticlePanier){
+
+    $sql = "DELETE ap FROM articles_panier 
+    AS ap JOIN paniers AS p ON p.id_panier = ap.id_panier 
+    WHERE ap.id_article_panier = :id_article 
+    AND p.id_utilisateur = :id_utilisateur";
+
+    $query = $this->db->prepare($sql);
+    $query->execute([
+        ':id_article' => $idArticlePanier,
+        ':id_utilisateur' => $idUtilisateur
+    ]);
+
+
+}
+
+
+
+public function addQteCasque(int $idUtilisateur, int $idArticlePanier){
+
+    $sql = "UPDATE articles_panier AS ap JOIN paniers AS p ON p.id_panier = ap.id_panier 
+    SET ap.quantite = ap.quantite + 1 WHERE ap.id_article_panier = :id_article 
+    AND p.id_utilisateur = :id_utilisateur";
+
+    $query = $this->db->prepare($sql);
+    $query->execute([
+        ':id_article' => $idArticlePanier,
+        ':id_utilisateur' => $idUtilisateur
+    ]);
+}
+
+public function rmvQteCasque(int $idUtilisateur, int $idArticlePanier){
+
+    $sql = "UPDATE articles_panier AS ap JOIN paniers AS p ON p.id_panier = ap.id_panier 
+    SET ap.quantite = ap.quantite - 1 WHERE ap.id_article_panier = :id_article 
+    AND p.id_utilisateur = :id_utilisateur AND ap.quantite > 1";
+
+    $query = $this->db->prepare($sql);
+    $query->execute([
+        ':id_article' => $idArticlePanier,
+        ':id_utilisateur' => $idUtilisateur
+    ]);
+
+}
 
 }

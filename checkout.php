@@ -9,7 +9,7 @@ $panierManager = new PanierManager();
 $panier = $panierManager->getPanierActifPourUtilisateur($idUtilisateur);
 
 $articles = [];
-$nombreTypes = 0;   
+$nombreTypes = 0;
 $nombreArticles = 0;
 $montantArticles = 0.0;
 $livraison = 9.99;        

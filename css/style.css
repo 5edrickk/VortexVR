@@ -133,6 +133,415 @@ img {
     }
     
 }
+/*Acceuil ou index.php par WILLIAM*/
+
+.acc-offre{
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.acc-offre{
+    display: flex;
+    justify-content: center;
+    background-color: red;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: larger;
+    margin-bottom: 10px;
+}
+
+.acc-whole{
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.acc-titre{
+    font-size: larger;
+    font-weight: bold;
+    margin-bottom: 30px;
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    text-align: center;
+    align-content: center;
+    height: 60px;
+}
+
+.acc-catalogue{
+    margin-top: 10px;
+    text-align: center;
+    height: 200px;
+}
+
+.acc-catalogue button{ 
+    padding: 5px 10px;
+    font-size: large;
+}
+
+.acc-succes, .acc-err{
+    margin-bottom: 30px;
+    text-align: center;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: large;
+
+}
+
+.acc-succes{
+     background-color: green;
+}
+
+.acc-err{
+     background-color: red;
+}
+
+.acc-top3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.acc-produit{
+    display: flex;
+    flex-direction: column;
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 15px;
+    min-width: 250px;
+    height: 450px;
+}
+
+.acc-img{
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.acc-img img{
+    max-width: 300px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.acc-info{
+    margin-bottom: 15px;
+}
+
+.acc-nom{
+    display: block;
+    font-weight: bold;
+    font-size: large;
+    margin-bottom: 5px;
+}
+
+.acc-prix{
+    display: block;
+    font-weight: bold;
+}
+
+.acc-panier button{
+    background-color: #6366f1;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 6px;
+}
+.acc-panier button:hover{
+    background-color: #4f46e5;
+}
+
+.acc-btn-catalogue{
+    padding: 12px 25px;
+    font-size: large;
+    font-weight: bold;
+    background-color: #e0b158;
+    width: 200px;
+    border-radius: 10px;
+    color: white;
+}
+
+.acc-btn-catalogue:hover{
+    background-color: #f4c98d;
+}
+
+.acc-switch-casque{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.acc-switch-casque button{
+    background-color: #6366f1;
+    color: white;
+    padding: 8px 14px;
+    margin: 10px;
+}
+/*Creation de casque par WILLIAM*/
+
+.crea-whole{
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.crea-section-titre{
+    text-align: center;
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 15px;
+    align-content: center;
+    margin-bottom: 30px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.crea-form{
+    margin-top: 60px;
+    padding: 30px 40px;
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+    "nom marque"
+    "prix inv"
+    "desc desc"
+    "img img"
+    "cree cree"
+    ;
+    gap: 20px 30px;
+    justify-items: center;
+}
+
+.crea-form input, .crea-form select, .crea-form textarea{
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #1e293b;
+    background-color: #2d3d55;
+    color: white;
+}
+.crea-form textarea {
+    height: 100%;
+    max-height: 400px;
+}
+
+.crea-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.crea-nom{
+    grid-area: nom;
+    text-align: center;
+}
+.crea-marque{
+    grid-area: marque;
+    text-align: center;
+}
+.crea-prix{
+    grid-area: prix;
+    text-align: center;
+}
+.crea-inv{
+    grid-area: inv;
+    text-align: center;
+}
+.crea-desc{
+    text-align: center;
+    grid-area: desc;
+    max-width: 400px;
+    width: 100%;
+}
+.crea-img{
+    grid-area: img;
+    max-width: 300px;
+    width: 100%;
+    text-align: center;
+}
+.crea-section-cree{
+    margin-top: 100px;
+    grid-area: cree;
+    justify-self: center;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+
+.crea-form{
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "nom"
+    "marque"
+    "prix"
+    "inv"
+    "desc"
+    "img"
+    "cree";
+}
+
+}
+
+/*PANIER PAR WILLIAM*/
+.panier{
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-produit{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1100px;
+    margin: auto;
+    justify-items: center;
+}
+
+.section-Total{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.panier-Total{
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    width: 300px;
+    min-height: 60px;
+    text-align: center;
+    align-content: center;
+}
+
+.section-commande{
+    display: flex;
+    justify-content: center;
+}
+
+.produit{
+    margin-left: 10px;
+    margin-bottom: 20px;
+    width: 85%;
+    min-width: 450px;
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 
+    "box nom"
+    "img img"
+    "desc desc"
+    "prix prix"
+    "qte suppr";
+}
+
+.produit-box{
+    grid-area: box;
+    width: 30px;
+}
+.produit-nom{
+    grid-area: nom;
+    text-align:center ;
+}
+.produit-img{
+    grid-area: img;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 430px;
+}
+.produit-img>img{
+    width: 300px;
+    max-height: 300px;
+}
+.produit-desc{
+    grid-area: desc;
+    text-align: center;
+}
+.produit-prix{
+    grid-area: prix;
+}
+.produit-suppr{
+    grid-area: suppr;
+    width: 200px;
+}
+.produit-qte{
+    grid-area: qte;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.produit-bold{
+    color: white;
+    font-weight: bold;
+}
+
+#commandePanier{
+    background-color: #f4c98d;
+    border: none;
+    border-radius: 100px;
+    font-weight: bold;
+    font-size: medium;
+    width: 400px;
+    height: 50px;
+}
+
+#commandePanier:hover{
+    background-color: #e0b158;
+    transform: scale(105%);
+}
+
+@media (max-width: 768px) {
+
+    .section-produit{
+    grid-template-columns: 1fr;
+    justify-items: center;
+    }
+
+    .produit{
+        width: 100%;
+        border: 1px solid #1e293b;
+        border-radius: 6px;
+        padding: 1rem;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: 
+        "box img nom"
+        ". img desc"
+        "prix qte sppr";
+    }
+
+    .produit-qte{
+    grid-area: qte;
+    width: 150px;
+    align-items: center;
+    gap: 2px;
+    }
+
+    .produit-nom{
+        width: 100%;
+    }
+
+
+
+
+}
+
 
 
 /* ===========================
