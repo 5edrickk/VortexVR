@@ -1,7 +1,7 @@
 <?php
-    define('MYSQL_SERVER', 'mysql:host=db;dbname=boutique_casques_vr;charset=utf8');
-    define('SQL_USER', 'root');
-    define('SQL_PASS', 'f4q2DG2obVd3I');
+  define('MYSQL_SERVER', 'mysql:host=db;dbname=dbLocation;charset=utf8');
+  define('SQL_USER', 'root');
+  define('SQL_PASS', 'f4q2DG2obVd3I');
 
     class PDOFactory {
         public static function getMySQLConnection() {
