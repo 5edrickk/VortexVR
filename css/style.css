@@ -603,7 +603,6 @@ par Sedrick*/
     padding: 1rem 0;
 }
 
-/* Grille responsive */
 .catalogue-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -694,7 +693,6 @@ par Sedrick*/
     cursor: not-allowed;
 }
 
-/* Responsive filtres + grille */
 @media (max-width: 900px) {
     .catalogue-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
