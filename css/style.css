@@ -496,3 +496,233 @@ img {
     background-color: #0f172a;
     color: #e5e7eb;
 }
+/*mise en page de catalogue.php
+par Sedrick*/
+
+.catalogue {
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.catalogue-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.catalogue-header {
+    background-color: #f4c98d;
+    color: #0f172a;
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.catalogue-success,
+.catalogue-error {
+    margin: 0.8rem 0 1rem 0;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background-color: #0f172a;
+    color: #e5e7eb;
+}
+
+.catalogue-filters {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    background-color: #0f172a;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+}
+
+.filter-group label {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.filter-group input,
+.filter-group select {
+    width: 100%;
+    padding: 0.55rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #334155;
+    background-color: #020617;
+    color: #e5e7eb;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #6366f1;
+    color: #fff;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background-color: #4f46e5;
+}
+
+.filter-link {
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #334155;
+    color: #e5e7eb;
+    text-decoration: none;
+}
+
+.filter-link:hover {
+    background-color: #1e293b;
+}
+
+.catalogue-empty {
+    color: #9ca3af;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.catalogue-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    width: 100%;
+}
+
+.catalogue-card {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 1rem;
+    min-width: 0;
+}
+
+.catalogue-title {
+    color: #e5e7eb;
+    font-size: 1.05rem;
+    margin-bottom: 0.2rem;
+}
+
+.catalogue-brand {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+
+.catalogue-imgbox {
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #020617;
+}
+
+.catalogue-img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    display: block;
+}
+
+.catalogue-desc {
+    margin-top: 0.8rem;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    line-height: 1.35;
+}
+
+.catalogue-meta {
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.catalogue-price {
+    font-weight: 700;
+    color: #e5e7eb;
+}
+
+.catalogue-stock {
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+.catalogue-actions {
+    margin-top: 0.9rem;
+}
+
+.catalogue-btn {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #6366f1;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.catalogue-btn:hover {
+    background-color: #4f46e5;
+}
+
+.catalogue-btn:disabled {
+    background-color: #334155;
+    cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+    .catalogue-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .catalogue-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .filter-actions {
+        justify-content: stretch;
+    }
+
+    .filter-btn,
+    .filter-link {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .catalogue-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .catalogue-img {
+        height: 190px;
+    }
+
+    .catalogue-filters {
+        grid-template-columns: 1fr;
+    }
+}

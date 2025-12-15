@@ -40,7 +40,7 @@ require_once "inc/autoloader.php";
                         Bienvenue <?= htmlspecialchars($_SESSION['nom_utilisateur']) ?>
                     </li>
 
-                    <li><a href="checkout.php">Panier</a></li>
+                    <li><a href="panier.php">Panier</a></li>
                     <li><a href="wallet.php">Wallet</a></li>
 
                     <li>
