@@ -2,19 +2,15 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once "inc/autoloader.php";
 ?>
-
 <!DOCTYPE html>
 <html lang="fr-ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VortexVR</title>
-
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <script src="js/script.js" defer></script>
+    <script src='js/script.js' defer></script>
 </head>
 
 <body>
@@ -27,34 +23,21 @@ require_once "inc/autoloader.php";
         </h1>
 
         <a href="index.php" class="logo-image">
-            <img src="images/favicon.png" alt="Logo Vortex VR">
+            <img src="images/logo.png" alt="Logo Vortex VR">
         </a>
 
         <nav class="main-nav">
             <ul>
                 <li><a href="catalogue.php">Catalogue</a></li>
-
-                <?php if (isset($_SESSION['id_utilisateur'])): ?>
-
-                    <li class="user-info">
-                        Bienvenue <?= htmlspecialchars($_SESSION['nom_utilisateur']) ?>
-                    </li>
-
-                    <li><a href="panier.php">Panier</a></li>
-                    <li><a href="wallet.php">Wallet</a></li>
-
-                    <li>
-                        <a href="logout.php">
-                            Déconnexion
-                        </a>
-                    </li>
-
-                <?php else: ?>
-
-                    <li><a href="compte.php">Connexion</a></li>
-
-                <?php endif; ?>
-
+                <li><a href="panier.php">Panier</a></li>
+                <li><a href="creation_casque.php">Créer un casque</a></li>
+                <?php if (!empty($_SESSION['nom_utilisateur'])): ?>
+            <a href="/projet-int-grateur-vortexvr/compte.php">Compte</a>
+            <a href="/projet-int-grateur-vortexvr/traitement.php?action=logout">Se déconnecter</a>
+      <?php else: ?>
+        <a href="/projet-int-grateur-vortexvr/register.php">Inscription</a>
+        <a href="/projet-int-grateur-vortexvr/login.php">Se connecter</a>
+      <?php endif; ?>
             </ul>
         </nav>
 

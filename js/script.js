@@ -194,3 +194,44 @@ if (document.URL.includes("wallet.php")) {
     }
     return "";
   }
+
+//Gatcha
+
+var code = "";
+if (window.location.pathname.endsWith("compte.php")) {
+function generateCaptcha() {
+    code = "";
+    for (var i = 0; i < 5; i++) {
+        code = code + (Math.floor(Math.random() * 9) + 1);
+    }
+    document.getElementById("txtCaptcha").value = code;
+    document.getElementById("CaptchaDiv").innerHTML = code;
+}
+
+function checkform(theform) {
+    var user = document.getElementById("CaptchaInput").value;
+
+    if (user == "") {
+        alert("Met le captcha !");
+        return false;
+    }
+
+    if (user != code) {
+        alert("Faux captcha !");
+        document.getElementById("CaptchaInput").value = "";
+        generateCaptcha();
+        return false;
+    }
+
+    document.getElementById("protectedContent").style.display = "block";
+    document.getElementById("CaptchaInput").style.display = "none";
+    document.getElementById("txtCaptcha").style.display = "none";
+    document.getElementById("CaptchaDiv").style.display = "none";
+
+    return false;
+}
+
+window.onload = function() {
+    generateCaptcha();
+};
+}

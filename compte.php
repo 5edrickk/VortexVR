@@ -1,67 +1,105 @@
-<?php require_once "inc/header.php";
-$erreur = null;
+<?php require_once "inc/header.php"; ?>
+<?php require_once "classe/clientManager.php"; ?>
+<?php require_once "classe/client.php"; ?>
+<section class="">
+    <div class="">
 
-if (isset($_SESSION['id_utilisateur'])) {
-    header("Location: catalogue.php");
+<form onsubmit="return checkform(this);" class="formmargin">
+
+    <div class="capbox">
+        <div id="CaptchaDiv"></div>
+        <div class="capbox-inner">
+            Type the number:<br>
+            <input type="hidden" id="txtCaptcha">
+            <input type="text" name="CaptchaInput" id="CaptchaInput" size="15">
+        </div>
+    </div>
+    <br>
+
+    <input type="submit" value="Valider le Captcha" class="subbutx3">
+
+</form>
+<hr>
+<div id="protectedContent" style="display:none;">
+
+<h2>Bienvenue sur la page se modifier les informations du compte</h2>
+        
+<?php
+$courriel= $_SESSION['courriel'];
+
+if (!$courriel) {
+   echo "Aucun client connecté.";
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connexion'])) {
-
-    $courriel = trim($_POST['courriel'] ?? '');
-    $motDePasse = trim($_POST['mot_de_passe'] ?? '');
-
-    if ($courriel === '' || $motDePasse === '') {
-        $erreur = "Veuillez remplir tous les champs.";
-    } else {
-
-        $utilisateurManager = new UtilisateurManager();
-        $user = $utilisateurManager->verifierConnexion($courriel, $motDePasse);
-
-        if (!$user) {
-            $erreur = "Courriel ou mot de passe incorrect.";
-        } else {
-
-            $_SESSION['id_utilisateur'] = (int) $user['id_utilisateur'];
-            $_SESSION['nom_utilisateur'] = $user['nom_utilisateur'];
-
-            header("Location: checkout.php");
-            exit;
-        }
-    }
-}
+$clientManager = new ClientManager();
+     $client = $clientManager->showClientByCourriel($courriel);
 ?>
 
-<section class="compte">
-    <div class="compte-container">
+<p><strong>Nom :</strong> <?= htmlspecialchars($client['nom']) ?></p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="nom">
+    <input type="text" name="nouvelle_valeur" placeholder="Nouveau nom">
+    <button type="submit">Envoyer</button>
+</form><br>
 
-        <section class="compte-header">
-            <h2>Connexion</h2>
-        </section>
+<p><strong>Prenom :</strong> <?= htmlspecialchars($client['prenom']) ?></p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="prenom">
+    <input type="text" name="nouvelle_valeur" placeholder="Nouveau prenom">
+    <button type="submit">Envoyer</button>
+</form><br>
 
-        <?php if ($erreur): ?>
-            <p class="compte-error"><?= $erreur ?></p>
-        <?php endif; ?>
+<p><strong>Nom d'utilisateur :</strong> <?= htmlspecialchars($client['nom_utilisateur']) ?></p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="nom_utilisateur">
+    <input type="text" name="nouvelle_valeur" placeholder="Nouveau nom d'utilisateur">
+    <button type="submit">Envoyer</button>
+</form><br>
 
-        <form method="post" class="compte-form">
+<p><strong>Email :</strong> <?= htmlspecialchars($client['courriel']) ?></p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="courriel">
+    <input type="email" name="nouvelle_valeur" placeholder="Nouvelle email">
+    <button type="submit">Envoyer</button>
+</form><br>
 
-            <div class="compte-group">
-                <label for="courriel">Courriel</label>
-                <input type="email" id="courriel" name="courriel" required>
-            </div>
+<p><strong>Pays :</strong> <?= htmlspecialchars($client['pays']) ?></p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="pays">
+    <input type="text" name="nouvelle_valeur" placeholder="Nouveau pays">
+    <button type="submit">Envoyer</button>
+</form><br>
 
-            <div class="compte-group">
-                <label for="mot_de_passe">Mot de passe</label>
-                <input type="password" id="mot_de_passe" name="mot_de_passe" required>
-            </div>
+<p><strong>Adresse :</strong> <?= htmlspecialchars($client['adresse']) ?></p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="adresse">
+    <input type="text" name="nouvelle_valeur" placeholder="Nouvelle addresse">
+    <button type="submit">Envoyer</button>
+</form><br>
 
-            <button type="submit" name="connexion" class="compte-btn">
-                Se connecter
-            </button>
+<p><strong>Ville :</strong> <?= htmlspecialchars($client['ville']) ?></p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="ville">
+    <input type="text" name="nouvelle_valeur" placeholder="Nouvelle ville">
+    <button type="submit">Envoyer</button>
+</form><br>
 
-        </form>
+<p><strong>Téléphone :</strong> <?= htmlspecialchars($client['telephone']) ?></p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="telephone">
+    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="nouvelle_valeur" placeholder="Nouveau telephone">
+    <button type="submit">Envoyer</button>
+</form><br>
 
-    </div>
+<p><strong>Argent :</strong> <?= htmlspecialchars($client['argent']) ?> $</p>
+<form method="post" action="updateClient.php">
+    <input type="hidden" name="champ" value="argent">
+    <input type="number" min="0" name="nouvelle_valeur" placeholder="Nouveau montant">
+    <button type="submit">Envoyer</button>
+</form><br>
+
+</div>
+</div>
 </section>
-
 <?php require_once "inc/footer.php"; ?>
