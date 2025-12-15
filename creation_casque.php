@@ -1,6 +1,7 @@
 <?php require_once "inc/header.php"; 
+include_once "classe/CreationManager.php";
 
-$idUtilisateur = $_SESSION['id_utilisateur'] = 2;
+$idUtilisateur = $_SESSION['id_utilisateur'];
 
 $creationManager = new CreationManager();
 $fini = false;

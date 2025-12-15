@@ -3,7 +3,6 @@
 include_once "classe/CasqueManager.php";
 include_once "classe/PanierManager.php";
 
-$_SESSION['id_utilisateur'];
 
 $casqueManager = new CasqueManager();
 $panierManager = new PanierManager();

@@ -1,9 +1,7 @@
 <?php require_once "inc/header.php"; ?>
 <?php require_once "classe/clientManager.php"; ?>
 <?php require_once "classe/client.php"; ?>
-<section class="">
-    <div class="">
-
+<section class="form-container">
 <form onsubmit="return checkform(this);" class="formmargin">
 
     <div class="capbox">
@@ -99,7 +97,6 @@ $clientManager = new ClientManager();
     <button type="submit">Envoyer</button>
 </form><br>
 
-</div>
 </div>
 </section>
 <?php require_once "inc/footer.php"; ?>

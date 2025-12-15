@@ -117,6 +117,17 @@ class ClientManager {
             throw new Exception("Erreur lors de la vérification du client : " . $e->getMessage());
         }
     }
+    //rajouter cette fonction par will
+    public function getIdByCourriel($courriel){
+         $stmt = $this->client->prepare("SELECT id_utilisateur FROM utilisateurs  WHERE courriel = :courriel LIMIT 1");
+         $stmt->execute([':courriel' => $courriel]);
+         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+         if($data && isset($data['id_utilisateur'])){
+            return (int)$data['id_utilisateur'];
+         }
+         return null;
+    }
+    //fin de l'ajout
 
     public function getClientById($id) {
         try {

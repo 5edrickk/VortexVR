@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $idClient = $clientManager->addClient($client);
 
-        $_SESSION['id_utilisateur'] = $idClient;
+        //$_SESSION['id_utilisateur'] = $idClient;
         $_SESSION['nom_utilisateur'] = $client->get_username();
         $_SESSION['prenom'] = $client->get_prenom();
         $_SESSION['argent'] = $client->get_argent();

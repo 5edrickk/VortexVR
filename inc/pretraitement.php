@@ -18,8 +18,8 @@ if (isset($_REQUEST['action'])) {
                     $client = $clientManager->clientExists($username, $password);
 
                     if ($client) {
-                        $_SESSION['id_utilisateur']   = $client->get_idClient();
                         $_SESSION['courriel']   = $client->get_courriel();
+                        $_SESSION['id_utilisateur']   = $clientManager->getIdByCourriel($_SESSION['courriel']);
                         $_SESSION['nomComplet'] = $client->get_prenom() . ' ' . $client->get_nom();
                         $_SESSION['nom_utilisateur']   = $client->get_username();
 
